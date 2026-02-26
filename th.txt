@@ -1,0 +1,64 @@
+auth :
+custome auth module
+cd pname...
+core app
+installad app -->
+
+models.py fileds override 
+BaseMangerUser
+User()
+makemigrations
+migrate
+
+superuser-->
+include to main urls.py
+
+signup form..
+form.py --> form class..
+
+views.py
+def sigupfunction:
+
+templates --> core --> signup.html
+
+urls.py
+<<-------------------------->
+task:
+templates: base.html --> layout
+
+usernavbar
+adminnavar
+content block
+
+:signupform design :
+
+
+login -->page ->email -->password -->
+database email -->avaialble  -->yes --> password compare..
+
+
+login.html --> Login view
+
+
+--->new app :-->
+parking
+
+
+--->
+login_view --> core.views.py
+form.py --> login form.  no model form
+
+templates --> core --> login.html
+
+check login view form authenticate
+
+create one app eg parking..
+
+views.py dashboard views.. 
+
+owner_dashboard.html
+user_dashboard.html
+
+urls.py parking.urls.py
+{{request.user}}
+

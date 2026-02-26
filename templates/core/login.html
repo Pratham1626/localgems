@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}LocalGems | Login Access{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-form-wrapper">
+        <div class="auth-form">
+            <h2>ACCESS PROTOCOL</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>IDENTIFICATION (EMAIL)</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label>SECURITY KEY (PASSWORD)</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn-futuristic pulse" style="width: 100%;">AUTHORIZE ACCESS</button>
+            </form>
+            <p style="margin-top: 20px; text-align: center; color: rgba(255,255,255,0.6);">
+                New operative? <a href="{% url 'signup' %}"
+                    style="color: var(--primary-cyan); text-decoration: none;">REGISTER HERE</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

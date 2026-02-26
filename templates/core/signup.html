@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}LocalGems | operative Registration{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-form-wrapper">
+        <div class="auth-form">
+            <h2>NEW operative REGISTRATION</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label|upper }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <p style="color: #ff4d4d; font-size: 0.8rem;">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn-futuristic secondary pulse" style="width: 100%;">INITIALIZE
+                    PROFILE</button>
+            </form>
+            <p style="margin-top: 20px; text-align: center; color: rgba(255,255,255,0.6);">
+                Already registered? <a href="{% url 'login' %}"
+                    style="color: var(--primary-purple); text-decoration: none;">ACCESS DASHBOARD</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
