@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Art Board{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 4rem; text-align: center;">
+    <span class="hero-eyebrow">&#10022; Discover</span>
+    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-white); font-weight: 300; margin-top: 1rem;">The Art Board</h1>
+    <p style="color: var(--text-muted-light); margin-top: 1rem; font-size: 1.05rem;">Browse and discover local talent in your city.</p>
+</div>
+
+<!-- Filters -->
+<div style="background: white; padding: 1.5rem 4rem; border-bottom: 1px solid #F0EBE3; position: sticky; top: 72px; z-index: 100;">
+    <form method="GET" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; max-width: 1400px; margin: 0 auto;">
+        <select name="category" class="form-control" style="width: auto; min-width: 180px;">
+            <option value="">All Categories</option>
+            {% for val, label in categories %}
+            <option value="{{ val }}" {% if val == selected_category %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="city" class="form-control" placeholder="Filter by city..." value="{{ selected_city }}" style="width: auto; min-width: 200px;">
+        <button type="submit" class="btn btn-gold" style="color: var(--bg-deep); padding: 0.75rem 2rem;">Search</button>
+        {% if selected_category or selected_city %}
+        <a href="{% url 'art_board' %}" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none;">Clear filters</a>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Grid -->
+<section style="padding: 5rem 4rem; max-width: 1400px; margin: 0 auto;">
+    {% if gems %}
+    <div class="portfolio-grid">
+        {% for gem in gems %}
+        <div class="portfolio-card">
+            <div class="card-image-wrapper" style="position: relative;">
+                {% if gem.cover_image_url %}
+                <img src="{{ gem.cover_image_url }}" class="card-image-main" alt="{{ gem.get_display_name }}">
+                {% else %}
+                <div class="card-image-main" style="background: linear-gradient(135deg, #1A1020 0%, #0F0A1A 100%); display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 4rem;">🎭</span>
+                </div>
+                {% endif %}
+                {% if gem.profile_image_url %}
+                <img src="{{ gem.profile_image_url }}" class="profile-overlap" alt="{{ gem.get_display_name }}">
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <span class="skill-badge">{{ gem.get_category_display }}</span>
+                <h3 style="font-size: 1.4rem; margin: 0.4rem 0 0.3rem;">{{ gem.get_display_name }}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    {% if gem.city %}{{ gem.city }} &nbsp;{% endif %}&#9733; {{ gem.rating }}
+                </p>
+                <a href="{% url 'artist_profile' gem.pk %}" class="btn btn-violet" style="width: 100%; text-align: center; padding: 0.7rem; font-size: 0.85rem;">View Profile</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 6rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">🎭</div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem;">No artists found</h3>
+        <p style="color: var(--text-muted);">Try adjusting your filters or check back soon.</p>
+        <a href="{% url 'signup' %}" class="btn btn-gold" style="color: var(--bg-deep); margin-top: 2rem;">Be the first to join</a>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

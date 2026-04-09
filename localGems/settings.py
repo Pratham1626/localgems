@@ -126,3 +126,26 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 AUTH_USER_MODEL = 'core.User'
+
+#mail config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '112308023.gvp@gujaratvidyapith.org'
+EMAIL_HOST_PASSWORD = 'qovp plox hbiv agdc' 
+
+
+# Razorpay
+RAZORPAY_KEY_ID     = 'rzp_test_SbLgrOnDKCZiZt'
+RAZORPAY_KEY_SECRET = 'GIbM3dTGEE4AA980a3x2TD53'
+
+# Plan prices in INR paise (1 INR = 100 paise)
+PLAN_PRICES = {
+    'pro':   99900,   # ₹999/month
+    'elite': 249900,  # ₹2499/month
+}
+PLAN_PRICES_DISPLAY = {
+    'pro':   '₹999',
+    'elite': '₹2,499',
+}

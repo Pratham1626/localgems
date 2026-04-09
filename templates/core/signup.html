@@ -1,31 +1,84 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}LocalGems | operative Registration{% endblock %}
+{% block title %}LocalGems | Join Now{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-form-wrapper">
-        <div class="auth-form">
-            <h2>NEW operative REGISTRATION</h2>
+<div class="auth-wrapper">
+    <!-- Left: Artistic Panel -->
+    <div class="auth-side-art">
+        <div style="position: relative; z-index: 1;">
+            <a href="{% url 'home' %}" class="nav-brand" style="display: inline-block; margin-bottom: 4rem;">LOCALGEMS</a>
+            <p class="art-quote">"Every artist was first an amateur."</p>
+            <p style="margin-top: 2rem; font-size: 1rem; color: var(--text-muted-light); line-height: 1.8; max-width: 340px;">
+                Your stage is waiting. Create your profile and let the world discover what you're made of.
+            </p>
+            <div style="margin-top: 4rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-size: 1rem;">&#10003;</div>
+                    <span style="font-size: 0.9rem; color: var(--text-muted-light);">Free to join, always</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-size: 1rem;">&#10003;</div>
+                    <span style="font-size: 0.9rem; color: var(--text-muted-light);">Showcase your portfolio</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-size: 1rem;">&#10003;</div>
+                    <span style="font-size: 0.9rem; color: var(--text-muted-light);">Connect with local clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="auth-side-form">
+        <div class="auth-form-clean" style="max-width: 460px;">
+            <p class="section-label" style="margin-bottom: 0.5rem;">Step 2 of 2</p>
+            <h2 class="form-title">Create Account</h2>
+            <div class="gold-divider" style="margin-bottom: 1.5rem;"></div>
+
+            <!-- Selected plan badge -->
+            {% if plan %}
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: var(--radius-lg); padding: 0.9rem 1.2rem; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.7rem;">
+                    <span style="font-size: 1.1rem;">{% if plan == 'free' %}🎭{% elif plan == 'pro' %}⭐{% else %}👑{% endif %}</span>
+                    <div>
+                        <div style="font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 700;">Selected Plan</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); text-transform: capitalize;">{{ plan }}</div>
+                    </div>
+                </div>
+                <a href="{% url 'pricing' %}" style="font-size: 0.78rem; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid #E5E0D8; padding-bottom: 1px;">Change</a>
+            </div>
+            {% endif %}
+
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="form-group">
-                    <label>{{ field.label|upper }}</label>
+                    <label class="form-label">{{ field.label }}</label>
                     {{ field }}
                     {% if field.errors %}
-                    <p style="color: #ff4d4d; font-size: 0.8rem;">{{ field.errors.0 }}</p>
+                    <p style="color: var(--accent-rose); font-size: 0.78rem; margin-top: 0.4rem;">{{ field.errors.0 }}</p>
                     {% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn-futuristic secondary pulse" style="width: 100%;">INITIALIZE
-                    PROFILE</button>
+
+                <button type="submit" class="btn btn-gold" style="width: 100%; border-radius: var(--radius-lg); padding: 1rem; font-size: 0.9rem; color: var(--bg-deep); margin-top: 0.5rem;">
+                    Begin Your Journey
+                </button>
             </form>
-            <p style="margin-top: 20px; text-align: center; color: rgba(255,255,255,0.6);">
-                Already registered? <a href="{% url 'login' %}"
-                    style="color: var(--primary-purple); text-decoration: none;">ACCESS DASHBOARD</a>
+
+            <p style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+                Already have an account?
+                <a href="{% url 'login' %}" style="color: var(--gold); text-decoration: none; font-weight: 700;">Sign In &rarr;</a>
             </p>
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.auth-form-clean input, .auth-form-clean select, .auth-form-clean textarea').forEach(el => {
+        el.classList.add('form-control');
+    });
+</script>
 {% endblock %}

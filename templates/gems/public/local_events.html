@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Local Events{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 5rem; text-align: center;">
+    <span class="hero-eyebrow">&#10022; Happening Now</span>
+    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-white); font-weight: 300; margin-top: 1rem;">Local Events</h1>
+    <p style="color: var(--text-muted-light); margin-top: 1rem; font-size: 1.05rem;">Live opportunities and events in your city.</p>
+</div>
+
+<section style="padding: 5rem 4rem; max-width: 1200px; margin: 0 auto;">
+    {% if calls %}
+    <div class="call-board">
+        {% for call in calls %}
+        <div class="call-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                <span class="badge-gold">{{ call.budget }}</span>
+                <span class="skill-badge">{{ call.get_category_display }}</span>
+            </div>
+            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem;">{{ call.title }}</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.6;">{{ call.description|truncatewords:20 }}</p>
+            {% if call.city %}<p style="font-size: 0.82rem; color: var(--text-muted-light); margin-bottom: 1.5rem;">&#128205; {{ call.city }}</p>{% else %}<div style="margin-bottom: 1.5rem;"></div>{% endif %}
+            <a href="{% url 'apply_open_call' call.pk %}" class="btn btn-gold" style="width: 100%; text-align: center; padding: 0.7rem; font-size: 0.85rem; color: var(--bg-deep);">Apply Now</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 6rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">🎪</div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem;">No events right now</h3>
+        <p style="color: var(--text-muted);">Check back soon for upcoming local events.</p>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

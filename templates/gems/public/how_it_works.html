@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | How it Works{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 5rem; text-align: center;">
+    <span class="hero-eyebrow">&#10022; Simple Process</span>
+    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-white); font-weight: 300; margin-top: 1rem;">How it Works</h1>
+    <p style="color: var(--text-muted-light); margin-top: 1rem; font-size: 1.05rem; max-width: 560px; margin-left: auto; margin-right: auto;">LocalGems connects talented artists with people who need them. Here's how.</p>
+</div>
+
+<!-- For Artists -->
+<section style="padding: 7rem 4rem; max-width: 1100px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <p class="section-label">For Artists</p>
+        <h2 class="section-title">Get Discovered</h2>
+        <div class="gold-divider" style="margin: 1rem auto;"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+        {% for step in "1,2,3"|make_list %}{% endfor %}
+        <div style="text-align: center; padding: 2.5rem 2rem;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold);">1</div>
+            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.8rem;">Create Your Profile</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Sign up, choose your category, and build a stunning profile that showcases your talent.</p>
+        </div>
+        <div style="text-align: center; padding: 2.5rem 2rem;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold);">2</div>
+            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.8rem;">Browse Open Calls</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Explore gigs and opportunities posted by event organizers, venues, and businesses.</p>
+        </div>
+        <div style="text-align: center; padding: 2.5rem 2rem;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold);">3</div>
+            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.8rem;">Apply &amp; Perform</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Submit your application with a personal message and land your next performance.</p>
+        </div>
+    </div>
+</section>
+
+<!-- For Owners -->
+<section style="background: var(--bg-deep); padding: 7rem 4rem;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <p class="section-label">For Organizers</p>
+            <h2 class="section-title section-title-light">Find the Right Talent</h2>
+            <div class="gold-divider" style="margin: 1rem auto;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+            <div style="text-align: center; padding: 2.5rem 2rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">📋</div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--text-white); margin-bottom: 0.8rem;">Post an Open Call</h4>
+                <p style="color: var(--text-muted-light); font-size: 0.9rem; line-height: 1.7;">Describe your event, set your budget, and publish your opportunity to thousands of artists.</p>
+            </div>
+            <div style="text-align: center; padding: 2.5rem 2rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🔍</div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--text-white); margin-bottom: 0.8rem;">Review Applications</h4>
+                <p style="color: var(--text-muted-light); font-size: 0.9rem; line-height: 1.7;">Browse applicants, read their messages, and view their full profiles before deciding.</p>
+            </div>
+            <div style="text-align: center; padding: 2.5rem 2rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🤝</div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--text-white); margin-bottom: 0.8rem;">Book with Confidence</h4>
+                <p style="color: var(--text-muted-light); font-size: 0.9rem; line-height: 1.7;">Every artist on LocalGems is rated and reviewed by the community.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 7rem 4rem; text-align: center; background: var(--bg-cream);">
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; margin-bottom: 1rem;">Ready to get started?</h2>
+    <div class="gold-divider" style="margin: 1rem auto 2rem;"></div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'signup' %}" class="btn btn-gold" style="color: var(--bg-deep);">Join as Artist</a>
+        <a href="{% url 'open_calls' %}" class="btn btn-outline-gold">Browse Open Calls</a>
+    </div>
+</section>
+
+{% endblock %}

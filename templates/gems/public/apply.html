@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Apply{% endblock %}
+{% block content %}
+
+<div style="min-height: 100vh; background: var(--bg-cream); display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem;">
+    <div style="width: 100%; max-width: 600px; background: white; border-radius: var(--radius-xl); padding: 3rem; box-shadow: var(--shadow-card);">
+        <p class="section-label">Application</p>
+        <h2 class="form-title">{{ call.title }}</h2>
+        <div class="gold-divider"></div>
+
+        <div style="background: var(--bg-cream); border-radius: var(--radius-lg); padding: 1.2rem 1.5rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <span class="badge-gold">{{ call.budget }}</span>
+            <span class="skill-badge">{{ call.get_category_display }}</span>
+            {% if call.city %}<span style="font-size: 0.85rem; color: var(--text-muted);">&#128205; {{ call.city }}</span>{% endif %}
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 2rem;">{{ call.description }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Your Message</label>
+                {{ form.message }}
+                {% if form.message.errors %}<p style="color: var(--accent-rose); font-size: 0.78rem; margin-top: 0.4rem;">{{ form.message.errors.0 }}</p>{% endif %}
+            </div>
+            <button type="submit" class="btn btn-gold" style="width: 100%; color: var(--bg-deep); padding: 1rem; border-radius: var(--radius-lg); margin-top: 0.5rem;">Submit Application</button>
+        </form>
+
+        <a href="{% url 'open_calls' %}" style="display: block; text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.88rem; text-decoration: none;">&larr; Back to Open Calls</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('textarea').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}

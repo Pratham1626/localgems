@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Help Center{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 5rem; text-align: center;">
+    <span class="hero-eyebrow">&#10022; Support</span>
+    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-white); font-weight: 300; margin-top: 1rem;">Help Center</h1>
+    <p style="color: var(--text-muted-light); margin-top: 1rem; font-size: 1.05rem;">Everything you need to know about LocalGems.</p>
+</div>
+
+<section style="padding: 7rem 4rem; max-width: 900px; margin: 0 auto;">
+
+    {% for qa in faq %}{% endfor %}
+
+    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+
+        {% for item in "1,2,3,4,5"|make_list %}{% endfor %}
+
+        <details style="background: white; border-radius: var(--radius-lg); padding: 1.5rem 2rem; box-shadow: var(--shadow-card); cursor: pointer;">
+            <summary style="font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                How do I create an artist profile?
+                <span style="color: var(--gold); font-size: 1.2rem;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); margin-top: 1rem; line-height: 1.7; font-size: 0.9rem;">Sign up with the "User" role, then go to your dashboard and click "Edit Profile". Fill in your stage name, category, bio, city, and add image URLs for your cover and profile photos.</p>
+        </details>
+
+        <details style="background: white; border-radius: var(--radius-lg); padding: 1.5rem 2rem; box-shadow: var(--shadow-card); cursor: pointer;">
+            <summary style="font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                How do I post an Open Call?
+                <span style="color: var(--gold); font-size: 1.2rem;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); margin-top: 1rem; line-height: 1.7; font-size: 0.9rem;">Register as an "Owner", go to your dashboard, and click "Post New Open Call". Fill in the title, description, budget, and category. Your call will be live immediately.</p>
+        </details>
+
+        <details style="background: white; border-radius: var(--radius-lg); padding: 1.5rem 2rem; box-shadow: var(--shadow-card); cursor: pointer;">
+            <summary style="font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                Is LocalGems free to use?
+                <span style="color: var(--gold); font-size: 1.2rem;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); margin-top: 1rem; line-height: 1.7; font-size: 0.9rem;">Yes. Creating a profile and browsing the platform is completely free. We believe talent should be accessible to everyone.</p>
+        </details>
+
+        <details style="background: white; border-radius: var(--radius-lg); padding: 1.5rem 2rem; box-shadow: var(--shadow-card); cursor: pointer;">
+            <summary style="font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                How do I apply to an Open Call?
+                <span style="color: var(--gold); font-size: 1.2rem;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); margin-top: 1rem; line-height: 1.7; font-size: 0.9rem;">Browse the Open Calls page, find an opportunity that fits, and click "Apply Now". You'll need to be logged in as a User. Write a short message and submit your application.</p>
+        </details>
+
+        <details style="background: white; border-radius: var(--radius-lg); padding: 1.5rem 2rem; box-shadow: var(--shadow-card); cursor: pointer;">
+            <summary style="font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                How do I contact support?
+                <span style="color: var(--gold); font-size: 1.2rem;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); margin-top: 1rem; line-height: 1.7; font-size: 0.9rem;">Email us at <a href="mailto:support@localgems.com" style="color: var(--gold);">support@localgems.com</a> and we'll get back to you within 24 hours.</p>
+        </details>
+
+    </div>
+</section>
+
+{% endblock %}

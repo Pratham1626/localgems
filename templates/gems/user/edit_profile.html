@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Edit Profile{% endblock %}
+{% block content %}
+
+<div style="min-height: 100vh; background: var(--bg-cream); padding: 8rem 2rem 4rem; display: flex; align-items: flex-start; justify-content: center;">
+    <div style="width: 100%; max-width: 640px; background: white; border-radius: var(--radius-xl); padding: 3rem; box-shadow: var(--shadow-card);">
+        <p class="section-label">Artist</p>
+        <h2 class="form-title">Edit Your Profile</h2>
+        <div class="gold-divider" style="margin-bottom: 2rem;"></div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #16A34A; padding: 0.9rem 1.2rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; font-size: 0.88rem;">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem;">{{ field.help_text }}</p>{% endif %}
+                {% if field.errors %}<p style="color: var(--accent-rose); font-size: 0.78rem; margin-top: 0.4rem;">{{ field.errors.0 }}</p>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-gold" style="width: 100%; color: var(--bg-deep); padding: 1rem; border-radius: var(--radius-lg); margin-top: 0.5rem;">Save Profile</button>
+        </form>
+
+        <a href="{% url 'user_dashboard' %}" style="display: block; text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.88rem; text-decoration: none;">&larr; Back to Dashboard</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input, select, textarea').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}

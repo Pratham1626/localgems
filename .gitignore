@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+env/
+.env
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Secrets — never commit real keys
+# (settings.py is included but keep live keys out)
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db

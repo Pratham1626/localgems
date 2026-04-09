@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Payment Failed{% endblock %}
+{% block content %}
+<div style="background: var(--bg-deep); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; text-align: center;">
+    <div style="max-width: 480px;">
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(244,63,94,0.1); border: 2px solid rgba(244,63,94,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">&#10005;</div>
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--text-white); font-weight: 300; margin-bottom: 1rem;">Payment Failed</h1>
+        <p style="color: var(--text-muted-light); line-height: 1.7; margin-bottom: 2.5rem;">Something went wrong with your payment. Your account has been created — you can retry payment from your dashboard or choose a different plan.</p>
+        <div class="gold-divider" style="margin: 0 auto 2.5rem;"></div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'login' %}" class="btn btn-gold" style="color: var(--bg-deep);">Sign In Anyway</a>
+            <a href="{% url 'pricing' %}" class="btn btn-outline-gold">Try Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

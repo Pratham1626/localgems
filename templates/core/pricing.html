@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LocalGems | Choose Your Plan{% endblock %}
+
+{% block content %}
+<div style="background: var(--bg-deep); min-height: 100vh; padding: 8rem 2rem 6rem;">
+
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 5rem;">
+        <span class="hero-eyebrow">&#10022; Step 1 of 2</span>
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); color: var(--text-white); font-weight: 300; margin-top: 1.2rem; line-height: 1.1;">
+            Choose Your <span style="background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-style: italic;">Plan</span>
+        </h1>
+        <p style="color: var(--text-muted-light); margin-top: 1.2rem; font-size: 1.05rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7;">
+            Select the membership that fits your journey. You can upgrade anytime.
+        </p>
+        <div class="gold-divider" style="margin: 2rem auto 0;"></div>
+    </div>
+
+    <!-- Plans Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1050px; margin: 0 auto;">
+
+        <!-- Free Plan -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="free">
+            <div style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-xl); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; transition: var(--transition);"
+                 onmouseover="this.style.borderColor='rgba(201,168,76,0.2)'; this.style.transform='translateY(-4px)'"
+                 onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.transform='translateY(0)'">
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted-light); margin-bottom: 0.8rem;">Free</p>
+                    <div style="display: flex; align-items: baseline; gap: 0.3rem;">
+                        <span style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; color: var(--text-white);">₹0</span>
+                        <span style="color: var(--text-muted-light); font-size: 0.9rem;">/ forever</span>
+                    </div>
+                    <p style="color: var(--text-muted-light); font-size: 0.88rem; margin-top: 0.8rem; line-height: 1.6;">Perfect for getting started and exploring the platform.</p>
+                </div>
+                <ul style="list-style: none; flex: 1; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Public artist profile
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Apply to 3 open calls/month
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Browse the Art Board
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: rgba(255,255,255,0.2);">
+                        <span style="font-size: 0.8rem;">&#10005;</span> Featured in spotlight
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: rgba(255,255,255,0.2);">
+                        <span style="font-size: 0.8rem;">&#10005;</span> Priority placement
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-outline-gold" style="width: 100%; padding: 0.9rem; font-size: 0.88rem;">
+                    Start Free
+                </button>
+            </div>
+        </form>
+
+        <!-- Pro Plan (highlighted) -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="pro">
+            <div style="background: linear-gradient(160deg, #1A1020 0%, #0F0A1A 100%); border: 1px solid rgba(201,168,76,0.4); border-radius: var(--radius-xl); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; position: relative; transition: var(--transition); box-shadow: 0 0 40px rgba(201,168,76,0.08);"
+                 onmouseover="this.style.borderColor='rgba(201,168,76,0.7)'; this.style.transform='translateY(-6px)'; this.style.boxShadow='0 0 60px rgba(201,168,76,0.15)'"
+                 onmouseout="this.style.borderColor='rgba(201,168,76,0.4)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 0 40px rgba(201,168,76,0.08)'">
+                <!-- Popular badge -->
+                <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gradient-gold); color: var(--bg-deep); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.35rem 1.2rem; border-radius: 50px; white-space: nowrap;">
+                    Most Popular
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;">Pro</p>
+                    <div style="display: flex; align-items: baseline; gap: 0.3rem;">
+                        <span style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">₹999</span>
+                        <span style="color: var(--text-muted-light); font-size: 0.9rem;">/ month</span>
+                    </div>
+                    <p style="color: var(--text-muted-light); font-size: 0.88rem; margin-top: 0.8rem; line-height: 1.6;">For serious artists ready to grow their presence.</p>
+                </div>
+                <ul style="list-style: none; flex: 1; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-white);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Everything in Free
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-white);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Unlimited open call applications
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-white);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Featured in Artist Spotlight
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-white);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Priority search placement
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: rgba(255,255,255,0.3);">
+                        <span style="font-size: 0.8rem;">&#10005;</span> Verified badge
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-gold" style="width: 100%; padding: 0.9rem; font-size: 0.88rem; color: var(--bg-deep);">
+                    Get Pro
+                </button>
+            </div>
+        </form>
+
+        <!-- Elite Plan -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="elite">
+            <div style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-xl); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; transition: var(--transition);"
+                 onmouseover="this.style.borderColor='rgba(201,168,76,0.2)'; this.style.transform='translateY(-4px)'"
+                 onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.transform='translateY(0)'">
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted-light); margin-bottom: 0.8rem;">Elite</p>
+                    <div style="display: flex; align-items: baseline; gap: 0.3rem;">
+                        <span style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; color: var(--text-white);">₹2,499</span>
+                        <span style="color: var(--text-muted-light); font-size: 0.9rem;">/ month</span>
+                    </div>
+                    <p style="color: var(--text-muted-light); font-size: 0.88rem; margin-top: 0.8rem; line-height: 1.6;">For professionals who want maximum visibility and credibility.</p>
+                </div>
+                <ul style="list-style: none; flex: 1; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.9rem;">
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Everything in Pro
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Verified artist badge
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Homepage feature rotation
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Dedicated profile analytics
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: var(--text-muted-light);">
+                        <span style="color: var(--gold); font-size: 0.8rem;">&#10003;</span> Priority support
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-outline-gold" style="width: 100%; padding: 0.9rem; font-size: 0.88rem;">
+                    Go Elite
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Trust line -->
+    <p style="text-align: center; color: var(--text-muted-light); font-size: 0.82rem; margin-top: 3rem; letter-spacing: 0.04em;">
+        &#128274; Secure &nbsp;&nbsp;&#10022;&nbsp;&nbsp; Cancel anytime &nbsp;&nbsp;&#10022;&nbsp;&nbsp; No hidden fees
+    </p>
+
+    <p style="text-align: center; margin-top: 2rem; color: var(--text-muted-light); font-size: 0.88rem;">
+        Already have an account? <a href="{% url 'login' %}" style="color: var(--gold); text-decoration: none; font-weight: 600;">Sign in &rarr;</a>
+    </p>
+
+</div>
+{% endblock %}

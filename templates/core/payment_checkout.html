@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Complete Payment{% endblock %}
+
+{% block content %}
+<div style="background: var(--bg-deep); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem;">
+    <div style="width: 100%; max-width: 480px;">
+
+        <!-- Order Summary Card -->
+        <div style="background: var(--bg-card); border: 1px solid rgba(201,168,76,0.2); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 1.5rem;">
+            <p style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;">Order Summary</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.2rem;">
+                <div>
+                    <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--text-white); font-weight: 600; text-transform: capitalize;">
+                        {% if plan == 'pro' %}⭐{% else %}👑{% endif %} {{ plan }} Plan
+                    </div>
+                    <div style="font-size: 0.82rem; color: var(--text-muted-light); margin-top: 0.3rem;">Monthly subscription</div>
+                </div>
+                <div style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                    {{ amount_display }}
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted-light); margin-bottom: 0.6rem;">
+                <span>Account</span><span>{{ user.email }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted-light);">
+                <span>GST (18%)</span><span>Included</span>
+            </div>
+        </div>
+
+        {% if razorpay_available %}
+        <!-- Live Razorpay Button -->
+        <button id="rzp-btn" class="btn btn-gold" style="width: 100%; padding: 1.1rem; font-size: 1rem; color: var(--bg-deep); border-radius: var(--radius-lg);">
+            Pay {{ amount_display }} Securely
+        </button>
+
+        <div style="display: flex; justify-content: center; gap: 1.2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <span style="font-size: 0.75rem; color: var(--text-muted-light);">&#128274; UPI</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted-light);">&#128274; Cards</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted-light);">&#128274; Net Banking</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted-light);">&#128274; Wallets</span>
+        </div>
+
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted-light);">
+            Powered by <strong style="color: var(--gold);">Razorpay</strong> &nbsp;&#10022;&nbsp; 256-bit SSL
+        </p>
+
+        <!-- Hidden callback form -->
+        <form id="rzp-form" method="POST" action="{% url 'payment_callback' %}" style="display:none;">
+            {% csrf_token %}
+            <input type="hidden" name="razorpay_payment_id" id="rzp_payment_id">
+            <input type="hidden" name="razorpay_order_id"   id="rzp_order_id"   value="{{ rz_order_id }}">
+            <input type="hidden" name="razorpay_signature"  id="rzp_signature">
+        </form>
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            var options = {
+                key:         "{{ rz_key_id }}",
+                amount:      "{{ amount }}",
+                currency:    "INR",
+                name:        "LocalGems",
+                description: "{{ plan|capfirst }} Plan",
+                order_id:    "{{ rz_order_id }}",
+                theme:       { color: "#C9A84C" },
+                prefill: {
+                    email:   "{{ user.email }}",
+                    contact: "{{ user.mobile|default:'' }}"
+                },
+                handler: function(response) {
+                    document.getElementById('rzp_payment_id').value = response.razorpay_payment_id;
+                    document.getElementById('rzp_order_id').value   = response.razorpay_order_id;
+                    document.getElementById('rzp_signature').value  = response.razorpay_signature;
+                    document.getElementById('rzp-form').submit();
+                },
+                modal: {
+                    ondismiss: function() {
+                        var btn = document.getElementById('rzp-btn');
+                        btn.textContent = 'Pay {{ amount_display }} Securely';
+                        btn.disabled = false;
+                    }
+                }
+            };
+            document.getElementById('rzp-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                this.textContent = 'Opening payment...';
+                this.disabled = true;
+                new Razorpay(options).open();
+            });
+        </script>
+
+        {% else %}
+        <!-- Dev / No-keys mode -->
+        <div style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: var(--radius-lg); padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted-light); line-height: 1.6;">
+            &#9888;&nbsp; <strong style="color: var(--gold);">Razorpay keys not configured.</strong><br>
+            Add your keys in <code style="color: var(--gold);">localGems/settings.py</code> to enable live payments.
+            Get free test keys at <a href="https://dashboard.razorpay.com/app/keys" target="_blank" style="color: var(--gold);">dashboard.razorpay.com</a>.
+        </div>
+
+        <a href="{% url 'payment_mock_confirm' %}" class="btn btn-gold" style="width: 100%; text-align: center; padding: 1.1rem; font-size: 1rem; color: var(--bg-deep); border-radius: var(--radius-lg); display: block;">
+            &#9654; Simulate Payment (Dev Mode)
+        </a>
+
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.78rem; color: var(--text-muted-light);">
+            This button activates your plan without real payment — for testing only.
+        </p>
+        {% endif %}
+
+        <a href="{% url 'pricing' %}" style="display: block; text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted-light); text-decoration: none;">&larr; Change plan</a>
+    </div>
+</div>
+{% endblock %}

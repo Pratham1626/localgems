@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Open Calls{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 4rem; text-align: center;">
+    <span class="hero-eyebrow">&#10022; Opportunities</span>
+    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-white); font-weight: 300; margin-top: 1rem;">Open Calls</h1>
+    <p style="color: var(--text-muted-light); margin-top: 1rem; font-size: 1.05rem;">Find your next gig. Apply directly to opportunities that match your talent.</p>
+</div>
+
+<section style="padding: 5rem 4rem; max-width: 1200px; margin: 0 auto;">
+    {% if messages %}
+    {% for message in messages %}
+    <div style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #16A34A; padding: 1rem 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem; font-size: 0.9rem;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if calls %}
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {% for call in calls %}
+        <div class="call-card" style="display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;">
+            <div>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap;">
+                    <span class="badge-gold">{{ call.budget }}</span>
+                    <span class="skill-badge">{{ call.get_category_display }}</span>
+                    {% if call.status == 'closing' %}
+                    <span style="color: var(--accent-rose); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Closing Soon</span>
+                    {% elif call.status == 'open' %}
+                    <span style="color: #22C55E; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Open</span>
+                    {% endif %}
+                </div>
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">{{ call.title }}</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">{{ call.description|truncatewords:30 }}</p>
+                {% if call.city %}<p style="color: var(--text-muted-light); font-size: 0.82rem; margin-top: 0.5rem;">&#128205; {{ call.city }}</p>{% endif %}
+            </div>
+            <div style="text-align: right; flex-shrink: 0;">
+                <a href="{% url 'apply_open_call' call.pk %}" class="btn btn-gold" style="color: var(--bg-deep); white-space: nowrap;">Apply Now</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 6rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">📋</div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem;">No open calls right now</h3>
+        <p style="color: var(--text-muted);">Check back soon or post your own opportunity.</p>
+        {% if request.user.is_authenticated and request.user.role == 'owner' %}
+        <a href="{% url 'create_open_call' %}" class="btn btn-gold" style="color: var(--bg-deep); margin-top: 2rem;">Post an Open Call</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

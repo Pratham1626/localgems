@@ -1,3 +1,63 @@
-<h1>OWNER DASHBOARD</h1>
-<p>Welcome, {{request.user}}</p>
-<a href="{% url 'logout' %}">Logout</a>
+{% extends 'base.html' %}
+{% block title %}LocalGems | Owner Dashboard{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 4rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+        <div>
+            <p class="section-label">Owner</p>
+            <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--text-white); font-weight: 300;">Dashboard</h1>
+            <p style="color: var(--text-muted-light); margin-top: 0.5rem;">Welcome back, {{ request.user.firstname|default:request.user.email }}</p>
+        </div>
+        <a href="{% url 'create_open_call' %}" class="btn btn-gold" style="color: var(--bg-deep);">+ Post New Open Call</a>
+    </div>
+</div>
+
+<!-- Stats -->
+<div style="background: white; border-bottom: 1px solid #F0EBE3;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem 4rem; display: flex; gap: 3rem; flex-wrap: wrap;">
+        <div>
+            <div class="stat-number" style="font-size: 2.5rem;">{{ my_calls.count }}</div>
+            <div style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem;">Open Calls Posted</div>
+        </div>
+        <div>
+            <div class="stat-number" style="font-size: 2.5rem;">{{ total_applications }}</div>
+            <div style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem;">Total Applications</div>
+        </div>
+    </div>
+</div>
+
+<!-- My Calls -->
+<section style="padding: 4rem; max-width: 1200px; margin: 0 auto;">
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem;">Your Open Calls</h2>
+
+    {% if my_calls %}
+    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        {% for call in my_calls %}
+        <div style="background: white; border-radius: var(--radius-xl); padding: 1.8rem 2rem; box-shadow: var(--shadow-card); display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; border-left: 3px solid var(--gold);">
+            <div>
+                <div style="display: flex; gap: 0.8rem; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap;">
+                    <span class="badge-gold">{{ call.budget }}</span>
+                    <span class="skill-badge">{{ call.get_category_display }}</span>
+                    <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                        {% if call.status == 'closing' %}color: var(--accent-rose);{% elif call.status == 'open' %}color: #22C55E;{% else %}color: var(--text-muted);{% endif %}">
+                        {{ call.get_status_display }}
+                    </span>
+                </div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600;">{{ call.title }}</h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem;">{{ call.applications.count }} application{{ call.applications.count|pluralize }}</p>
+            </div>
+            <a href="{% url 'view_applications' call.pk %}" class="btn btn-outline-gold" style="white-space: nowrap; font-size: 0.82rem;">View Applications</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; background: var(--bg-cream); border-radius: var(--radius-xl);">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You haven't posted any open calls yet.</p>
+        <a href="{% url 'create_open_call' %}" class="btn btn-gold" style="color: var(--bg-deep);">Post Your First Call</a>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

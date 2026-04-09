@@ -1,3 +1,75 @@
-<h1>USER DASHBOARD</h1>
-<p>Welcome, {{request.user}}</p>
-<a href="{% url 'logout' %}">Logout</a>
+{% extends 'base.html' %}
+{% block title %}LocalGems | My Dashboard{% endblock %}
+{% block content %}
+
+<div style="background: var(--bg-deep); padding: 8rem 4rem 4rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+        <div>
+            <p class="section-label">Artist</p>
+            <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--text-white); font-weight: 300;">My Dashboard</h1>
+            <p style="color: var(--text-muted-light); margin-top: 0.5rem;">Welcome back, {{ request.user.firstname|default:request.user.email }}</p>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'edit_gem_profile' %}" class="btn btn-outline-gold">Edit Profile</a>
+            <a href="{% url 'open_calls' %}" class="btn btn-gold" style="color: var(--bg-deep);">Browse Open Calls</a>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Card -->
+<section style="padding: 4rem; max-width: 1200px; margin: 0 auto;">
+    {% if gem %}
+    <div style="background: white; border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--shadow-card); display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; margin-bottom: 3rem; border-left: 3px solid var(--gold);">
+        <div style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold); overflow: hidden; background: var(--bg-cream); flex-shrink: 0;">
+            {% if gem.profile_image_url %}
+            <img src="{{ gem.profile_image_url }}" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🎭</div>
+            {% endif %}
+        </div>
+        <div style="flex: 1;">
+            <span class="skill-badge">{{ gem.get_category_display }}</span>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; margin: 0.3rem 0;">{{ gem.get_display_name }}</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">{% if gem.city %}&#128205; {{ gem.city }} &nbsp;&nbsp;{% endif %}&#9733; {{ gem.rating }}</p>
+        </div>
+        <a href="{% url 'artist_profile' gem.pk %}" style="font-size: 0.85rem; color: var(--gold); text-decoration: none; font-weight: 600; white-space: nowrap;">View Public Profile &rarr;</a>
+    </div>
+    {% else %}
+    <div style="background: var(--bg-cream); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 3rem; text-align: center; border: 1px dashed rgba(201,168,76,0.3);">
+        <p style="color: var(--text-muted); margin-bottom: 1.2rem;">You haven't set up your artist profile yet.</p>
+        <a href="{% url 'edit_gem_profile' %}" class="btn btn-gold" style="color: var(--bg-deep);">Create Your Profile</a>
+    </div>
+    {% endif %}
+
+    <!-- Applications -->
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem;">My Applications</h2>
+
+    {% if my_applications %}
+    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        {% for app in my_applications %}
+        <div style="background: white; border-radius: var(--radius-xl); padding: 1.8rem 2rem; box-shadow: var(--shadow-card); display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;">
+            <div>
+                <div style="display: flex; gap: 0.8rem; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <span class="badge-gold">{{ app.open_call.budget }}</span>
+                    <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                        {% if app.open_call.status == 'closing' %}color: var(--accent-rose);{% elif app.open_call.status == 'open' %}color: #22C55E;{% else %}color: var(--text-muted);{% endif %}">
+                        {{ app.open_call.get_status_display }}
+                    </span>
+                </div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">{{ app.open_call.title }}</h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem;">Applied {{ app.applied_at|date:"M d, Y" }}</p>
+            </div>
+            <span style="font-size: 0.78rem; color: var(--text-muted); white-space: nowrap;">Submitted &#10003;</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; background: var(--bg-cream); border-radius: var(--radius-xl);">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You haven't applied to any open calls yet.</p>
+        <a href="{% url 'open_calls' %}" class="btn btn-gold" style="color: var(--bg-deep);">Browse Open Calls</a>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

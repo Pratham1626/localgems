@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}LocalGems | Post Open Call{% endblock %}
+{% block content %}
+
+<div style="min-height: 100vh; background: var(--bg-cream); padding: 8rem 2rem 4rem; display: flex; align-items: flex-start; justify-content: center;">
+    <div style="width: 100%; max-width: 640px; background: white; border-radius: var(--radius-xl); padding: 3rem; box-shadow: var(--shadow-card);">
+        <p class="section-label">Owner</p>
+        <h2 class="form-title">Post an Open Call</h2>
+        <div class="gold-divider" style="margin-bottom: 2rem;"></div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<p style="color: var(--accent-rose); font-size: 0.78rem; margin-top: 0.4rem;">{{ field.errors.0 }}</p>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-gold" style="width: 100%; color: var(--bg-deep); padding: 1rem; border-radius: var(--radius-lg); margin-top: 0.5rem;">Publish Open Call</button>
+        </form>
+
+        <a href="{% url 'owner_dashboard' %}" style="display: block; text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.88rem; text-decoration: none;">&larr; Back to Dashboard</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input, select, textarea').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}

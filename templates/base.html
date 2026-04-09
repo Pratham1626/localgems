@@ -5,62 +5,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LocalGems | AI Control Panel{% endblock %}</title>
+    <title>{% block title %}LocalGems | Discover Talent{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Inline nav text fix — navbar starts over dark hero */
+        header .nav-link { color: var(--text-white); }
+        header .navbar.scrolled .nav-link { color: var(--text-white); }
+    </style>
 </head>
 
 <body>
-    <div class="grid-bg"></div>
-
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <nav class="sidebar" id="sidebar">
-        <a href="{% url 'home' %}" class="nav-item futuristic-font">HOME</a>
-        <a href="{% url 'signup' %}" class="nav-item futuristic-font">SIGN UP</a>
-        <a href="{% url 'login' %}" class="nav-item futuristic-font">LOGIN</a>
-    </nav>
+    <header>
+        <nav class="navbar" id="mainNav">
+            <a href="{% url 'home' %}" class="nav-brand">LOCALGEMS</a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+                <a href="{% url 'art_board' %}" class="nav-link">Art Board</a>
+                <a href="{% url 'open_calls' %}" class="nav-link">Open Calls</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.role == 'owner' %}
+                        <a href="{% url 'owner_dashboard' %}" class="nav-link">Dashboard</a>
+                    {% else %}
+                        <a href="{% url 'user_dashboard' %}" class="nav-link">Dashboard</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}" class="btn btn-outline-gold" style="padding: 0.6rem 1.6rem; font-size: 0.82rem;">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    <a href="{% url 'pricing' %}" class="btn btn-gold" style="padding: 0.6rem 1.6rem; font-size: 0.82rem; color: var(--bg-deep);">Join the Community</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
 
     <main>
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="futuristic-font">LOCALGEMS</h4>
-                <p>Discover and support local talent in your community. Empowering creators and professionals alike.</p>
+    <footer class="footer-modern">
+        <div class="footer-grid">
+            <div class="footer-brand-side">
+                <a href="{% url 'home' %}" class="nav-brand" style="font-size: 2rem;">LOCALGEMS</a>
+                <p>A curated community where local talent takes the spotlight. Discover, book, and collaborate with the best artists in your city.</p>
+                <div style="display: flex; gap: 0.8rem; margin-top: 2rem;">
+                    <a href="#" style="width: 38px; height: 38px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold-light); text-decoration: none; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.1)'">&#x1D4F8;</a>
+                    <a href="#" style="width: 38px; height: 38px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold-light); text-decoration: none; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.1)'">in</a>
+                    <a href="#" style="width: 38px; height: 38px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold-light); text-decoration: none; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.1)'">&#9825;</a>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4 class="futuristic-font">LINKS</h4>
-                <ul class="footer-links">
-                    <li><a href="{% url 'home' %}">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+            
+            <div class="footer-nav-col">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="{% url 'art_board' %}">The Art Board</a></li>
+                    <li><a href="{% url 'open_calls' %}">Open Calls</a></li>
+                    <li><a href="{% url 'how_it_works' %}">How it Works</a></li>
                 </ul>
             </div>
+            
+            <div class="footer-nav-col">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="{% url 'artist_spotlight' %}">Artist Spotlight</a></li>
+                    <li><a href="{% url 'local_events' %}">Local Events</a></li>
+                    <li><a href="{% url 'success_stories' %}">Success Stories</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-nav-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="{% url 'help_center' %}">Help Center</a></li>
+                    <li><a href="{% url 'privacy' %}">Privacy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 5rem; color: #4A4540; font-size: 0.82rem; border-top: 1px solid rgba(201,168,76,0.08); padding-top: 2.5rem; letter-spacing: 0.06em;">
+            &copy; 2026 LocalGems &nbsp;&#10022;&nbsp; Built for creators.
         </div>
     </footer>
 
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            sidebar.classList.toggle('active');
-        });
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
-                hamburger.classList.remove('active');
-                sidebar.classList.remove('active');
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
             }
         });
     </script>
